@@ -21,10 +21,10 @@ public class AndroidDeviceTest {
 
 	protected static final Logger logger = LoggerFactory
 			.getLogger(AndroidDeviceTest.class);
-	protected DeviceStore deviceStore;
+	protected static DeviceStore deviceStore;
 
 	@BeforeClass
-	public void setUp() {
+	public static void setUp() {
 		deviceStore = AndroidDeviceStore.getInstance();
 		assertTrue("devices size must > 0", deviceStore.getDevices().size() > 0);
 	}
@@ -32,13 +32,13 @@ public class AndroidDeviceTest {
 	protected AndroidDevice pollFirst() {
 		return deviceStore.getDevices().pollFirst();
 	}
-	
-	protected TreeSet<AndroidDevice> getDevices(){
+
+	protected TreeSet<AndroidDevice> getDevices() {
 		return deviceStore.getDevices();
 	}
 
 	@AfterClass
-	public void tearDown() {
+	public static void tearDown() {
 		deviceStore.shutdown();
 	}
 }
