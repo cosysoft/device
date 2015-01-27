@@ -8,21 +8,30 @@ A lot of code quote from selendroid,but we will foucs on simplify ddmlib's usage
 ### Take Devices 
 
 ```java
-
-TreeSet<AndroidDevice> devices = AndroidDeviceStore.getInstance()
+		TreeSet<AndroidDevice> devices = AndroidDeviceStore.getInstance()
 				.getDevices();
-AndroidDevice device = devices.pollFirst();
-System.out.println(device.getName());
+		AndroidDevice device = devices.pollFirst();
+		System.out.println(device.getName());
 
 ```
-xiaomi-2013022-ZDPB8PVCO7QGYDQG
 
 ### Screenshot
 
 ```java
+		BufferedImage image = device.takeScreenshot();
+		String imagePath = new File(System.getProperty("java.io.tmpdir"),
+				"screenshot.png").getAbsolutePath();
+		ImageUtils.writeToFile(image, imagePath);
 
-AndroidDevice device = getDevices().pollFirst();
-BufferedImage image = device.takeScreenshot();
-ImageUtils.writeToFile(image, "d:\\a.png");
+```
 
+### Install/Uninstall App
+
+```java
+		AndroidApp app = new DefaultAndroidApp(new File(
+				"d:\\uat\\com.android.chrome.apk"));
+		device.install(app);
+		if (device.isInstalled(app)) {
+			device.uninstall(app);
+		}
 ```

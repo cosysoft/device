@@ -6,16 +6,24 @@ import java.util.Locale;
 
 import org.cosysoft.device.model.DeviceInfo;
 
+import com.android.ddmlib.log.LogReceiver;
+
 /**
  * 
  * @author ltyao
  *
  */
 public interface AndroidDevice {
-	
+
 	String getSerialNumber();
 
 	Locale getLocale();
+
+	String getName();
+
+	AndroidDeviceBrand getBrand();
+
+	Dimension getScreenSize();
 
 	void tap(int x, int y);
 
@@ -29,20 +37,15 @@ public interface AndroidDevice {
 
 	boolean isScreenOn();
 
+	DeviceTargetPlatform getTargetPlatform();
+	
+	String currentActivity();
+
+	void invokeActivity(String activity);
 	/**
 	 * io.appium.unlock/.Unlock
 	 */
 	void unlock();
-
-	/**
-	 * 
-	 * @return
-	 */
-	String getName();
-
-	AndroidDeviceBrand getBrand();
-
-	Dimension getScreenSize();
 
 	void install(AndroidApp app);
 
@@ -68,10 +71,6 @@ public interface AndroidDevice {
 
 	void kill(String appBasePackage);
 
-	boolean screenSizeMatches(String requestedScreenSize);
-
-	DeviceTargetPlatform getTargetPlatform();
-
 	String runAdbCommand(String parameter);
 
 	/**
@@ -80,10 +79,6 @@ public interface AndroidDevice {
 	 */
 	void inputKeyevent(int value);
 
-	void invokeActivity(String activity);
-
-	void restartADB();
-
 	String getExternalStoragePath();
 
 	String getCrashLog();
@@ -91,6 +86,9 @@ public interface AndroidDevice {
 	boolean isWifiOff();
 
 	DeviceInfo getDeviceInfo();
+	
+	void restartADB();
+	
+	void runLogService(LogReceiver logReceiver);
 
-	String currentActivity();
 }

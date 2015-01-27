@@ -1,22 +1,19 @@
 package org.cosysoft.device.android;
 
-import org.cosysoft.device.shell.AndroidSdkException;
-import org.cosysoft.device.shell.ShellCommandException;
 
 public interface AndroidApp {
 
-	String getBasePackage() throws AndroidSdkException;
+	String getBasePackage();
 
-	String getMainActivity() throws AndroidSdkException;
+	String getMainActivity();
 
 	void setMainActivity(String mainActivity);
 
-	String getVersionName() throws AndroidSdkException;
+	String getVersionName();
 
-	void deleteFileFromWithinApk(String file) throws ShellCommandException,
-			AndroidSdkException;
+	void deleteFileFromWithinApk(String file);
 
-	String getAppId() throws AndroidSdkException;
+	String getAppId();
 
 	/**
 	 * For testing only

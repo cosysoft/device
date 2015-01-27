@@ -4,8 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.cosysoft.device.android.AndroidApp;
-import org.cosysoft.device.shell.AndroidSdkException;
-import org.cosysoft.device.shell.ShellCommandException;
 
 public class InstalledAndroidApp implements AndroidApp {
 
@@ -27,12 +25,12 @@ public class InstalledAndroidApp implements AndroidApp {
 	}
 
 	@Override
-	public String getBasePackage() throws AndroidSdkException {
+	public String getBasePackage() {
 		return packageName;
 	}
 
 	@Override
-	public String getMainActivity() throws AndroidSdkException {
+	public String getMainActivity() {
 		return (activityName.contains(".")) ? activityName : packageName + "."
 				+ activityName;
 	}
@@ -42,18 +40,17 @@ public class InstalledAndroidApp implements AndroidApp {
 	}
 
 	@Override
-	public String getVersionName() throws AndroidSdkException {
+	public String getVersionName() {
 		return version;
 	}
 
 	@Override
-	public void deleteFileFromWithinApk(String file)
-			throws ShellCommandException, AndroidSdkException {
+	public void deleteFileFromWithinApk(String file) {
 		// no-op
 	}
 
 	@Override
-	public String getAppId() throws AndroidSdkException {
+	public String getAppId() {
 		return packageName + ":" + version;
 	}
 

@@ -1,6 +1,8 @@
 package org.cosysoft.device.shell;
 
-public class AndroidSdkException extends RuntimeException {
+import org.cosysoft.device.exception.NestedException;
+
+public class AndroidSdkException extends NestedException {
   private static final long serialVersionUID = 5431510243540521938L;
 
   public AndroidSdkException(String message) {

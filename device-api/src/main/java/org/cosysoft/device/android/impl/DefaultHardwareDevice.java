@@ -119,7 +119,4 @@ public class DefaultHardwareDevice extends AbstractDevice implements
 		return true;
 	}
 
-
-
-
 }

@@ -1,6 +1,5 @@
 package org.cosysoft.device.android.impl;
 
-import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.cosysoft.device.android.AndroidApp;
@@ -19,8 +17,8 @@ import org.cosysoft.device.android.AndroidDevice;
 import org.cosysoft.device.android.AndroidDeviceBrand;
 import org.cosysoft.device.android.DeviceTargetPlatform;
 import org.cosysoft.device.exception.AndroidDeviceException;
-import org.cosysoft.device.exception.NestedException;
 import org.cosysoft.device.exception.DeviceUnlockException;
+import org.cosysoft.device.exception.NestedException;
 import org.cosysoft.device.image.ImageUtils;
 import org.cosysoft.device.model.DeviceInfo;
 import org.cosysoft.device.shell.AndroidSdk;
@@ -34,13 +32,15 @@ import com.android.ddmlib.AdbCommandRejectedException;
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.RawImage;
 import com.android.ddmlib.TimeoutException;
+import com.android.ddmlib.log.LogReceiver;
+import com.android.ddmlib.log.LogReceiver.ILogListener;
+import com.android.ddmlib.log.LogReceiver.LogEntry;
 
 public abstract class AbstractDevice implements AndroidDevice {
 	private static final Logger log = LoggerFactory
 			.getLogger(AbstractDevice.class);
 	protected String serial = null;
 	protected IDevice device;
-	private ExecuteWatchdog logcatWatchdog;
 	private static final Integer COMMAND_TIMEOUT = 20000;
 	private AndroidDeviceBrand brand = null;
 
@@ -281,10 +281,6 @@ public abstract class AbstractDevice implements AndroidDevice {
 		} finally {
 		}
 
-		if (logcatWatchdog != null && logcatWatchdog.isWatching()) {
-			logcatWatchdog.destroyProcess();
-			logcatWatchdog = null;
-		}
 	}
 
 	@Override
@@ -336,24 +332,6 @@ public abstract class AbstractDevice implements AndroidDevice {
 		}
 
 		return "";
-	}
-
-	public boolean screenSizeMatches(String requestedScreenSize) {
-		// if screen size is not requested, just ignore it
-		if (requestedScreenSize == null || requestedScreenSize.isEmpty()) {
-			return true;
-		}
-
-		Pattern dimensionPattern = Pattern.compile("([0-9]+)x([0-9]+)");
-		Matcher dimensionMatcher = dimensionPattern
-				.matcher(requestedScreenSize);
-		if (dimensionMatcher.matches()) {
-			int width = Integer.parseInt(dimensionMatcher.group(1));
-			int height = Integer.parseInt(dimensionMatcher.group(2));
-			return getScreenSize().equals(new Dimension(width, height));
-		} else {
-			return false;
-		}
 	}
 
 	public String runAdbCommand(String parameter) {
@@ -573,6 +551,26 @@ public abstract class AbstractDevice implements AndroidDevice {
 		return deviceInfo;
 
 	};
+
+	@Override
+	public void runLogService(LogReceiver logReceiver) {
+		try {
+			device.runLogService("hello", new LogReceiver(new ILogListener() {
+
+				@Override
+				public void newEntry(LogEntry entry) {
+					log.info("newEntry", entry);
+				}
+
+				@Override
+				public void newData(byte[] data, int offset, int length) {
+					log.info("newData", new String(data));
+				}
+			}));
+		} catch (TimeoutException | AdbCommandRejectedException | IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public int hashCode() {
