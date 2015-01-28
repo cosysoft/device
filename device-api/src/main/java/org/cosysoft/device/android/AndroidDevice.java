@@ -6,7 +6,8 @@ import java.util.Locale;
 
 import org.cosysoft.device.model.DeviceInfo;
 
-import com.android.ddmlib.log.LogReceiver;
+import com.android.ddmlib.IDevice;
+import com.android.ddmlib.logcat.LogCatListener;
 
 /**
  * 
@@ -14,6 +15,12 @@ import com.android.ddmlib.log.LogReceiver;
  *
  */
 public interface AndroidDevice {
+	
+	/**
+	 * test only
+	 * @return
+	 */
+	IDevice getDevice();
 
 	String getSerialNumber();
 
@@ -89,6 +96,13 @@ public interface AndroidDevice {
 	
 	void restartADB();
 	
-	void runLogService(LogReceiver logReceiver);
+	
+	/**
+	 * 
+	 * @param logCatListener
+	 */
+	void addLogCatListener(LogCatListener logCatListener);
+	
+	void removeLogCatListener(LogCatListener logCatListener);
 
 }

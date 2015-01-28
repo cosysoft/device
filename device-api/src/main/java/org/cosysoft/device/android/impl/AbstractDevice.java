@@ -4,7 +4,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,9 +34,8 @@ import com.android.ddmlib.AdbCommandRejectedException;
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.RawImage;
 import com.android.ddmlib.TimeoutException;
-import com.android.ddmlib.log.LogReceiver;
-import com.android.ddmlib.log.LogReceiver.ILogListener;
-import com.android.ddmlib.log.LogReceiver.LogEntry;
+import com.android.ddmlib.logcat.LogCatListener;
+import com.android.ddmlib.logcat.LogCatReceiverTask;
 
 public abstract class AbstractDevice implements AndroidDevice {
 	private static final Logger log = LoggerFactory
@@ -65,6 +66,11 @@ public abstract class AbstractDevice implements AndroidDevice {
 	public AbstractDevice(IDevice device) {
 		this.device = device;
 		this.serial = device.getSerialNumber();
+	}
+
+	@Override
+	public IDevice getDevice() {
+		return device;
 	}
 
 	protected AbstractDevice() {
@@ -552,23 +558,33 @@ public abstract class AbstractDevice implements AndroidDevice {
 
 	};
 
+	private LogCatReceiverTask logCatReceiverTask;
+	private final Set<LogCatListener> logCatListeners = new HashSet<>();;
+	private boolean logCatRunning = false;
+
 	@Override
-	public void runLogService(LogReceiver logReceiver) {
-		try {
-			device.runLogService("hello", new LogReceiver(new ILogListener() {
+	public synchronized void addLogCatListener(LogCatListener logCatListener) {
+		if (logCatReceiverTask == null) {
+			logCatReceiverTask = new LogCatReceiverTask(device);
+		}
+		logCatReceiverTask.addLogCatListener(logCatListener);
+		logCatListeners.add(logCatListener);
+		if (!logCatRunning) {
+			logCatReceiverTask.run();
+			logCatRunning = true;
+		}
+	}
 
-				@Override
-				public void newEntry(LogEntry entry) {
-					log.info("newEntry", entry);
-				}
-
-				@Override
-				public void newData(byte[] data, int offset, int length) {
-					log.info("newData", new String(data));
-				}
-			}));
-		} catch (TimeoutException | AdbCommandRejectedException | IOException e) {
-			e.printStackTrace();
+	@Override
+	public synchronized void removeLogCatListener(LogCatListener logCatListener) {
+		if (logCatReceiverTask == null) {
+			logCatReceiverTask = new LogCatReceiverTask(device);
+		}
+		logCatReceiverTask.removeLogCatListener(logCatListener);
+		logCatListeners.remove(logCatListener);
+		if (logCatListeners.size() < 1) {
+			logCatReceiverTask.stop();
+			logCatRunning = false;
 		}
 	}
 

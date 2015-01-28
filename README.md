@@ -35,3 +35,22 @@ A lot of code quote from selendroid,but we will foucs on simplify ddmlib's usage
 			device.uninstall(app);
 		}
 ```
+
+### LogCat with custom filter
+```java
+		final LogCatFilter filter = new LogCatFilter("", "", "com.android", "",
+				"", LogLevel.WARN);
+		final LogCatListener lcl = new LogCatListener() {
+			@Override
+			public void log(List<LogCatMessage> msgList) {
+				for (LogCatMessage msg : msgList) {
+					if (filter.matches(msg)) {
+						System.out.println(msg);
+					}
+				}
+			}
+		};
+		
+		device.addLogCatListener(lcl);
+		Thread.sleep(60000);	
+```

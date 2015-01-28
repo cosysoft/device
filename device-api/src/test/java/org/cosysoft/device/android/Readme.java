@@ -2,12 +2,18 @@ package org.cosysoft.device.android;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.List;
 import java.util.TreeSet;
 
 import org.cosysoft.device.android.impl.AndroidDeviceStore;
 import org.cosysoft.device.android.impl.DefaultAndroidApp;
 import org.cosysoft.device.image.ImageUtils;
 import org.junit.Test;
+
+import com.android.ddmlib.Log.LogLevel;
+import com.android.ddmlib.logcat.LogCatFilter;
+import com.android.ddmlib.logcat.LogCatListener;
+import com.android.ddmlib.logcat.LogCatMessage;
 
 public class Readme extends AndroidDeviceTest {
 
@@ -44,10 +50,22 @@ public class Readme extends AndroidDeviceTest {
 	public void testLogcat() throws InterruptedException{
 		AndroidDevice device = getDevices().pollFirst();
 		
-		device.runLogService(null);
-		
-		Thread.sleep(5000);
-		
+		final LogCatFilter filter = new LogCatFilter("", "", "com.android", "",
+				"", LogLevel.WARN);
+		final LogCatListener lcl = new LogCatListener() {
+			@Override
+			public void log(List<LogCatMessage> msgList) {
+				for (LogCatMessage msg : msgList) {
+					if (filter.matches(msg)) {
+						System.out.println(msg);
+					}
+				}
+			}
+		};
+
+		device.addLogCatListener(lcl);
+
+		Thread.sleep(60000);		
 		
 	}
 	
