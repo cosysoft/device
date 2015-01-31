@@ -32,6 +32,7 @@ public class Readme extends AndroidDeviceTest {
 		String imagePath = new File(System.getProperty("java.io.tmpdir"),
 				"screenshot.png").getAbsolutePath();
 		ImageUtils.writeToFile(image, imagePath);
+		logger.debug("image saved to path {}",imagePath);
 	}
 
 	@Test
