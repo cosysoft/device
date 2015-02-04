@@ -2,10 +2,13 @@ package org.cosysoft.device.android;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.Locale;
 
+import org.cosysoft.device.model.ClientDataInfo;
 import org.cosysoft.device.model.DeviceInfo;
 
+import com.android.ddmlib.Client;
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.logcat.LogCatListener;
 
@@ -15,9 +18,10 @@ import com.android.ddmlib.logcat.LogCatListener;
  *
  */
 public interface AndroidDevice {
-	
+
 	/**
 	 * test only
+	 * 
 	 * @return
 	 */
 	IDevice getDevice();
@@ -45,10 +49,11 @@ public interface AndroidDevice {
 	boolean isScreenOn();
 
 	DeviceTargetPlatform getTargetPlatform();
-	
+
 	String currentActivity();
 
 	void invokeActivity(String activity);
+
 	/**
 	 * io.appium.unlock/.Unlock
 	 */
@@ -93,16 +98,19 @@ public interface AndroidDevice {
 	boolean isWifiOff();
 
 	DeviceInfo getDeviceInfo();
-	
+
 	void restartADB();
-	
-	
+
 	/**
 	 * 
 	 * @param logCatListener
 	 */
 	void addLogCatListener(LogCatListener logCatListener);
-	
+
 	void removeLogCatListener(LogCatListener logCatListener);
+
+	List<ClientDataInfo> getClientDatasInfo();
+
+	Client getClientByAppName(String appName);
 
 }

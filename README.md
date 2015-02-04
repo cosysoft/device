@@ -55,5 +55,17 @@ device.addLogCatListener(lcl);
 Thread.sleep(60000);
 ```
 
+## Monitor
+Ddmlib can monitor one app's cpu/heap/threads and much more,but we need list running client first.
+
+### List running client for app
+```java
+List<ClientDataInfo> clientDataInfos = device.getClientDatasInfo();
+for (ClientDataInfo client : clientDataInfos) {
+	System.out.println(client.getName());
+	System.out.println(client.getPid());
+}
+```
+
 ## License
 [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)

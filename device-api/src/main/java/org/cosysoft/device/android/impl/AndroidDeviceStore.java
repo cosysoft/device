@@ -35,7 +35,7 @@ public class AndroidDeviceStore implements DeviceStore {
 		static AndroidDeviceStore init() {
 			AndroidDeviceStore instance;
 			instance = new AndroidDeviceStore();
-			instance.initAndroidDevices(false);
+			instance.initAndroidDevices(true);
 			return instance;
 		}
 	}
@@ -72,7 +72,7 @@ public class AndroidDeviceStore implements DeviceStore {
 	protected void initializeAdbConnection() {
 		// Get a device bridge instance. Initialize, create and restart.
 		try {
-			AndroidDebugBridge.init(false);
+			AndroidDebugBridge.init(true);
 		} catch (IllegalStateException e) {
 			// When we keep the adb connection alive the AndroidDebugBridge may
 			// have been already
@@ -115,7 +115,7 @@ public class AndroidDeviceStore implements DeviceStore {
 			}
 
 		}
-
+		this.devices.addAll(connectedDevices.values());
 	}
 
 	@Override

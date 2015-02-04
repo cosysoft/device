@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,6 +23,7 @@ import org.cosysoft.device.exception.AndroidDeviceException;
 import org.cosysoft.device.exception.DeviceUnlockException;
 import org.cosysoft.device.exception.NestedException;
 import org.cosysoft.device.image.ImageUtils;
+import org.cosysoft.device.model.ClientDataInfo;
 import org.cosysoft.device.model.DeviceInfo;
 import org.cosysoft.device.shell.AndroidSdk;
 import org.cosysoft.device.shell.AndroidSdkException;
@@ -31,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.android.ddmlib.AdbCommandRejectedException;
+import com.android.ddmlib.Client;
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.RawImage;
 import com.android.ddmlib.TimeoutException;
@@ -586,6 +589,21 @@ public abstract class AbstractDevice implements AndroidDevice {
 			logCatReceiverTask.stop();
 			logCatRunning = false;
 		}
+	}
+
+	@Override
+	public List<ClientDataInfo> getClientDatasInfo() {
+		List<ClientDataInfo> dataInfos = new ArrayList<ClientDataInfo>();
+		Client clients[] = this.device.getClients();
+		for (int i = 0; i < clients.length; i++) {
+			dataInfos.add(new ClientDataInfo(clients[i]));
+		}
+		return dataInfos;
+	}
+
+	@Override
+	public Client getClientByAppName(String appName) {
+		return null;
 	}
 
 	@Override

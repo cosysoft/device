@@ -8,6 +8,7 @@ import java.util.TreeSet;
 import org.cosysoft.device.android.impl.AndroidDeviceStore;
 import org.cosysoft.device.android.impl.DefaultAndroidApp;
 import org.cosysoft.device.image.ImageUtils;
+import org.cosysoft.device.model.ClientDataInfo;
 import org.junit.Test;
 
 import com.android.ddmlib.Log.LogLevel;
@@ -32,7 +33,7 @@ public class Readme extends AndroidDeviceTest {
 		String imagePath = new File(System.getProperty("java.io.tmpdir"),
 				"screenshot.png").getAbsolutePath();
 		ImageUtils.writeToFile(image, imagePath);
-		logger.debug("image saved to path {}",imagePath);
+		logger.debug("image saved to path {}", imagePath);
 	}
 
 	@Test
@@ -46,11 +47,11 @@ public class Readme extends AndroidDeviceTest {
 			device.uninstall(app);
 		}
 	}
-	
+
 	@Test
-	public void testLogcat() throws InterruptedException{
+	public void testLogcat() throws InterruptedException {
 		AndroidDevice device = getDevices().pollFirst();
-		
+
 		final LogCatFilter filter = new LogCatFilter("", "", "com.android", "",
 				"", LogLevel.WARN);
 		final LogCatListener lcl = new LogCatListener() {
@@ -66,10 +67,18 @@ public class Readme extends AndroidDeviceTest {
 
 		device.addLogCatListener(lcl);
 
-		Thread.sleep(60000);		
-		
+		Thread.sleep(60000);
+
 	}
-	
-	
+
+	@Test
+	public void testListClients() {
+		AndroidDevice device = getDevices().pollFirst();
+		List<ClientDataInfo> clientDataInfos = device.getClientDatasInfo();
+		for (ClientDataInfo client : clientDataInfos) {
+			System.out.println(client.getName());
+			System.out.println(client.getPid());
+		}
+	}
 
 }
