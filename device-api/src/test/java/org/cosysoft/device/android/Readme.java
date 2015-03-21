@@ -10,6 +10,7 @@ import org.cosysoft.device.android.impl.DefaultAndroidApp;
 import org.cosysoft.device.image.ImageUtils;
 import org.cosysoft.device.model.ClientDataInfo;
 import org.junit.Test;
+import org.slf4j.profiler.Profiler;
 
 import com.android.ddmlib.Log.LogLevel;
 import com.android.ddmlib.logcat.LogCatFilter;
@@ -29,7 +30,12 @@ public class Readme extends AndroidDeviceTest {
 	@Test
 	public void takeScreenshot() {
 		AndroidDevice device = getDevices().pollFirst();
+		
+		Profiler profiler = new Profiler("screen");
+		profiler.start("start");
 		BufferedImage image = device.takeScreenshot();
+		profiler.stop();
+		profiler.print();
 		String imagePath = new File(System.getProperty("java.io.tmpdir"),
 				"screenshot.png").getAbsolutePath();
 		ImageUtils.writeToFile(image, imagePath);

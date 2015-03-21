@@ -16,3 +16,7 @@ bin
 
 test-output
 *.DS_Store
+
+.idea
+
+bower_components/

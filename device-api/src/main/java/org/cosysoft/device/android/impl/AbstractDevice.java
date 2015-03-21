@@ -31,6 +31,7 @@ import org.cosysoft.device.shell.ShellCommand;
 import org.cosysoft.device.shell.ShellCommandException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.profiler.Profiler;
 
 import com.android.ddmlib.AdbCommandRejectedException;
 import com.android.ddmlib.Client;
@@ -365,7 +366,12 @@ public abstract class AbstractDevice implements AndroidDevice {
 		}
 		RawImage rawImage;
 		try {
+			Profiler profiler = new Profiler("native screen");
+			profiler.start("start");
 			rawImage = device.getScreenshot();
+			
+			profiler.stop();
+			profiler.print();
 		} catch (IOException ioe) {
 			throw new AndroidDeviceException("Unable to get frame buffer: "
 					+ ioe.getMessage());

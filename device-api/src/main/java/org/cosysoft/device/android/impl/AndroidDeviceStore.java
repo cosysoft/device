@@ -14,8 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.android.ddmlib.AndroidDebugBridge;
+import com.android.ddmlib.DdmPreferences;
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.IDevice.DeviceState;
+import com.android.ddmlib.Log.LogLevel;
 
 public class AndroidDeviceStore implements DeviceStore {
 
@@ -51,6 +53,7 @@ public class AndroidDeviceStore implements DeviceStore {
 	 */
 	public void initAndroidDevices(boolean shouldKeepAdbAlive)
 			throws AndroidDeviceException {
+		DdmPreferences.setLogLevel(LogLevel.VERBOSE.getStringValue());
 
 		this.initializeAdbConnection();
 		TreeSet<AndroidDevice> androidDevices = this.getDevices();
