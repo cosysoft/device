@@ -20,3 +20,4 @@ test-output
 .idea
 
 bower_components/
+node_modules/
