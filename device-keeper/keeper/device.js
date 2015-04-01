@@ -6,6 +6,12 @@ var _ = require('underscore');
 var Device = function () {
     this.devices = [{
         nodeIp: '172.0.0.1', nodeName: 'Windows8', udid: '1111111111'
+    }, {
+        nodeIp: '172.0.0.1', nodeName: 'Windows8', udid: '2222222222222'
+    }, {
+        nodeIp: '172.0.0.1', nodeName: 'Windows8', udid: '2222222222222'
+    }, {
+        nodeIp: '172.0.0.1', nodeName: 'Windows8', udid: '2222222222222'
     }];
 };
 

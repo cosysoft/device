@@ -23,3 +23,112 @@ https://github.com/google/material-design-icons
 .menuBtn {
     background: transparent url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyNHB4IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI0IDI0IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IkhlYWRlciI+CiAgICA8Zz4KICAgICAgICA8cmVjdCB4PSItNjE4IiB5PSItMjIzMiIgZmlsbD0ibm9uZSIgd2lkdGg9IjE0MDAiIGhlaWdodD0iMzYwMCIvPgogICAgPC9nPgo8L2c+CjxnIGlkPSJMYWJlbCI+CjwvZz4KPGcgaWQ9Ikljb24iPgogICAgPGc+CiAgICAgICAgPHJlY3QgZmlsbD0ibm9uZSIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+CiAgICAgICAgPHBhdGggZD0iTTMsMThoMTh2LTJIM1YxOHogTTMsMTNoMTh2LTJIM1YxM3ogTTMsNnYyaDE4VjZIM3oiIHN0eWxlPSJmaWxsOiNmM2YzZjM7Ii8+CiAgICA8L2c+CjwvZz4KPGcgaWQ9IkdyaWQiIGRpc3BsYXk9Im5vbmUiPgogICAgPGcgZGlzcGxheT0iaW5saW5lIj4KICAgIDwvZz4KPC9nPgo8L3N2Zz4=) no-repeat  center center;
 }
+
+
+.docs-menu,
+.docs-menu ul {
+    list-style: none;
+    padding: 0;
+}
+.docs-menu li {
+    margin: 0;
+}
+.docs-menu > li {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+.docs-menu .md-button {
+    border-radius: 0;
+    color: inherit;
+    cursor: pointer;
+    display: block;
+    line-height: 40px;
+    margin: 0;
+    max-height: 40px;
+    overflow: hidden;
+    padding: 0px 16px;
+    text-align: left;
+    text-decoration: none;
+    white-space: normal;
+    width: 100%;
+}
+.docs-menu button.md-button::-moz-focus-inner {
+    padding: 0;
+}
+.docs-menu .md-button.active {
+    color: #03a9f4;
+}
+.menu-heading {
+    display: block;
+    line-height: 40px;
+    margin: 0;
+    padding: 0px 16px;
+    text-align: left;
+    width: 100%;
+}
+.docs-menu li.parentActive,
+.docs-menu li.parentActive .menu-toggle-list {
+    background-color: #f6f6f6;
+}
+.menu-toggle-list {
+    background: #fff;
+    max-height: 1300px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    -webkit-transition: 0.75s cubic-bezier(0.35, 0, 0.25, 1);
+    -webkit-transition-property: max-height;
+    -moz-transition: 0.75s cubic-bezier(0.35, 0, 0.25, 1);
+    -moz-transition-property: max-height;
+    transition: 0.75s cubic-bezier(0.35, 0, 0.25, 1);
+    transition-property: max-height;
+}
+.menu-toggle-list.ng-hide {
+    max-height: 0;
+}
+.docs-menu .menu-toggle-list a.md-button {
+    display: block;
+    font-weight: 400;
+    padding: 0 16px 0 32px;
+    text-transform: none;
+}
+.md-button-toggle .md-toggle-icon {
+    display: block;
+    margin-left: auto;
+    speak: none;
+    vertical-align: middle;
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transition: transform 0.3s ease-in-out;
+    -webkit-transition: -webkit-transform 0.3s ease-in-out;
+}
+.md-button-toggle .md-toggle-icon.toggled {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+}
+/* End Docs Menu */
+
+.docs-logo:focus {
+    outline: none;
+}
+.docs-logo md-icon {
+    height: 40px;
+    margin: 0;
+    width: 40px;
+}
+.docs-logotype {
+    line-height: 40px;
+    text-indent: 15px;
+}
+.docs-menu-icon {
+    background: none;
+    border: none;
+    margin-right: 16px;
+    padding: 0;
+}
+.docs-menu-separator-icon {
+    margin: 0;
+    padding: 0 10px;
+}
+.docs-menu-separator-icon img {
+    height: 16px;
+}

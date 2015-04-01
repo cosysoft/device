@@ -19,15 +19,11 @@
 <div layout="row" flex>
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left"
                 md-is-locked-open="$mdMedia('gt-sm')">
-        <md-list>
-            <md-item ng-repeat="item in menus">
-                <md-item-content>
-                    <div class="md-tile-left">
-                        <a href="#{{item.hash}}"><h3>{{item.name}}</h3></a>
-                    </div>
-                </md-item-content>
-            </md-item>
-        </md-list>
+        <ul class="docs-menu">
+            <li ng-repeat="menu in menus" ng-class="{'childActive' : isSectionSelected(menu)}">
+                <a class="md-button" href="#{{menu.hash}}"><span>{{menu.name}}</span></a>
+            </li>
+        </ul>
     </md-sidenav>
 
     <div layout="column" flex id="content">
