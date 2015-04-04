@@ -1,0 +1,5 @@
+rootProject.name = 'device'
+
+include 'device-api'
+include 'device-node'
+

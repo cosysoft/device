@@ -1,0 +1,69 @@
+
+
+buildscript {
+    repositories {
+        maven {
+            url 'http://maven.oschina.net/content/groups/public/'
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
+    }
+}
+
+subprojects {
+    version '0.9.0-SNAPSHOT'
+
+    apply plugin: 'java'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        maven {
+            url 'http://maven.oschina.net/content/groups/public/'
+        }
+    }
+    dependencies {
+
+        compile 'org.slf4j:slf4j-api:1.7.12'
+        compile 'org.slf4j:slf4j-ext:1.7.12'
+        compile 'ch.qos.logback:logback-classic:1.1.3'
+        compile 'commons-io:commons-io:2.4'
+        compile 'org.apache.commons:commons-lang3:3.3.2'
+        testCompile("junit:junit:4.12")
+    }
+
+    task echo << {
+        println ddmlib
+    }
+}
+
+project(':device-api') {
+
+    ext {
+        ddmlib = '24.1.3'
+    }
+    dependencies {
+        compile 'org.apache.commons:commons-exec:1.2'
+        compile 'commons-cli:commons-cli:1.2'
+        compile "com.android.tools.ddms:ddmlib:$ddmlib"
+        compile "com.android.tools:dvlib:$ddmlib"
+        compile "com.android.tools:sdklib:$ddmlib"
+        compile "com.android.tools:sdk-common:$ddmlib"
+
+    }
+}
+
+project(':device-node') {
+
+
+    
+    apply plugin: 'spring-boot'
+
+    dependencies {
+        compile("org.springframework.boot:spring-boot-starter-web")
+        testCompile("org.springframework.boot:spring-boot-starter-test")
+    }
+}
+

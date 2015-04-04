@@ -12,12 +12,17 @@ hs_err_pid*
 *.log
 target
 bin
+build
+test-output
 .settings
 
-test-output
+
 *.DS_Store
 
 .idea
+*.iml
 
 bower_components/
 node_modules/
+
+.gradle
