@@ -59,6 +59,7 @@ project(':device-node') {
     apply plugin: 'spring-boot'
 
     dependencies {
+        compile project(':device-api')
         compile("org.springframework.boot:spring-boot-starter-web")
         compile("org.springframework.boot:spring-boot-starter-actuator")
         compile("org.springframework.boot:spring-boot-starter-remote-shell")
