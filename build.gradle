@@ -31,6 +31,11 @@ subprojects {
         compile 'org.apache.commons:commons-lang3:3.3.2'
         testCompile("junit:junit:4.12")
     }
+    compileJava {
+
+        options.encoding = 'utf-8'
+        //enable incremental compilation
+    }
 
     task echo << {
         println ddmlib

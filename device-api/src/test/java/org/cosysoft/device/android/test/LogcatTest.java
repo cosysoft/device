@@ -1,7 +1,8 @@
-package org.cosysoft.device.android;
+package org.cosysoft.device.android.test;
 
 import java.util.List;
 
+import org.cosysoft.device.android.AndroidDevice;
 import org.junit.Test;
 
 import com.android.ddmlib.Log.LogLevel;

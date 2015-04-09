@@ -1,4 +1,4 @@
-package org.cosysoft.device.android;
+package org.cosysoft.device.android.test;
 
 import static org.junit.Assert.*;
 

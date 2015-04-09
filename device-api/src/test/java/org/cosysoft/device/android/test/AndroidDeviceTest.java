@@ -1,10 +1,11 @@
-package org.cosysoft.device.android;
+package org.cosysoft.device.android.test;
 
 import static org.junit.Assert.assertTrue;
 
 import java.util.TreeSet;
 
 import org.cosysoft.device.DeviceStore;
+import org.cosysoft.device.android.AndroidDevice;
 import org.cosysoft.device.android.impl.AndroidDeviceStore;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
