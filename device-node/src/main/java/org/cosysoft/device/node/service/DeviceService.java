@@ -34,7 +34,6 @@ public class DeviceService {
         return ImageUtils.toByteArray(image);
     }
 
-    @Cacheable(value = "devices")
     public List<DeviceInfo> getDevices() {
         List<DeviceInfo> deviceInfos = new ArrayList<>();
         deviceStore.getDevices().forEach(device -> {

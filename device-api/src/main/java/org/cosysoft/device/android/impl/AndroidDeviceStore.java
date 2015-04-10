@@ -1,9 +1,9 @@
 package org.cosysoft.device.android.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeSet;
-
+import com.android.ddmlib.AndroidDebugBridge;
+import com.android.ddmlib.DdmPreferences;
+import com.android.ddmlib.IDevice;
+import com.android.ddmlib.Log.LogLevel;
 import org.cosysoft.device.DeviceStore;
 import org.cosysoft.device.android.AndroidDevice;
 import org.cosysoft.device.exception.AndroidDeviceException;
@@ -13,22 +13,20 @@ import org.cosysoft.device.shell.AndroidSdk;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.android.ddmlib.AndroidDebugBridge;
-import com.android.ddmlib.DdmPreferences;
-import com.android.ddmlib.IDevice;
-import com.android.ddmlib.IDevice.DeviceState;
-import com.android.ddmlib.Log.LogLevel;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeSet;
 
 public class AndroidDeviceStore implements DeviceStore {
 
     protected static final Logger logger = LoggerFactory
             .getLogger(AndroidDeviceStore.class);
 
-    protected final TreeSet<AndroidDevice> devices = new TreeSet<>();
-    private Map<IDevice, DefaultHardwareDevice> connectedDevices = new HashMap<>();
+    private Map<IDevice, AndroidDevice> connectedDevices = new HashMap<>();
 
     private AndroidDebugBridge bridge;
-    private boolean shouldKeepAdbAlive;
+    private boolean shouldKeepAdbAlive = false;
 
     static class DeviceStoreHolder {
 
@@ -37,7 +35,7 @@ public class AndroidDeviceStore implements DeviceStore {
         static AndroidDeviceStore init() {
             AndroidDeviceStore instance;
             instance = new AndroidDeviceStore();
-            instance.initAndroidDevices(true);
+            instance.initAndroidDevices(false);
             return instance;
         }
     }
@@ -54,17 +52,7 @@ public class AndroidDeviceStore implements DeviceStore {
     public void initAndroidDevices(boolean shouldKeepAdbAlive)
             throws AndroidDeviceException {
         DdmPreferences.setLogLevel(LogLevel.VERBOSE.getStringValue());
-
         this.initializeAdbConnection();
-        TreeSet<AndroidDevice> androidDevices = this.getDevices();
-
-        if (androidDevices.isEmpty()) {
-            throw new DeviceNotFoundException(
-                    "No android devices were found. Please start an Android hardware device via USB, "
-                            + "or check other device offline problem such as open USB Debug");
-        }
-        devices.addAll(androidDevices);
-
     }
 
     /**
@@ -112,18 +100,53 @@ public class AndroidDeviceStore implements DeviceStore {
         for (int i = 0; i < devices.length; i++) {
             logger.info("devices state: {},{} ", devices[i].getName(),
                     devices[i].getState());
-            if (DeviceState.ONLINE == devices[i].getState()) {
-                connectedDevices.put(devices[i], new DefaultHardwareDevice(
-                        devices[i]));
+            connectedDevices.put(devices[i], new DefaultHardwareDevice(
+                    devices[i]));
+        }
+
+
+        bridge.addDeviceChangeListener(new AndroidDebugBridge.IDeviceChangeListener() {
+            @Override
+            public void deviceConnected(IDevice device) {
+                logger.info("deviceConnected {}", device.getSerialNumber());
+                AndroidDevice ad = new DefaultHardwareDevice(device);
+                Iterator<Map.Entry<IDevice, AndroidDevice>> entryIterator = connectedDevices.entrySet().iterator();
+                boolean contain = false;
+                while (entryIterator.hasNext()) {
+                    Map.Entry entry = entryIterator.next();
+                    if (entry.getValue().equals(ad)) {
+                        contain = true;
+                        break;
+                    }
+                }
+                if (!contain) {
+                    connectedDevices.put(device, ad);
+                }
             }
 
-        }
-        this.devices.addAll(connectedDevices.values());
+            @Override
+            public void deviceDisconnected(IDevice device) {
+                logger.info("deviceDisconnected {}", device.getSerialNumber());
+                AndroidDevice ad = new DefaultHardwareDevice(device);
+                Iterator<Map.Entry<IDevice, AndroidDevice>> entryIterator = connectedDevices.entrySet().iterator();
+                while (entryIterator.hasNext()) {
+                    Map.Entry entry = entryIterator.next();
+                    if (entry.getValue().equals(ad)) {
+                        entryIterator.remove();
+                    }
+                }
+            }
+
+            @Override
+            public void deviceChanged(IDevice device, int changeMask) {
+                logger.info(device.getSerialNumber() + " " + changeMask);
+            }
+        });
     }
 
     @Override
     public TreeSet<AndroidDevice> getDevices() {
-        return new TreeSet<AndroidDevice>(devices);
+        return new TreeSet<AndroidDevice>(connectedDevices.values());
     }
 
     @Override
