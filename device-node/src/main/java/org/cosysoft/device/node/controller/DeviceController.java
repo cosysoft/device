@@ -1,6 +1,7 @@
 package org.cosysoft.device.node.controller;
 
 import org.cosysoft.device.model.DeviceInfo;
+import org.cosysoft.device.node.domain.Result;
 import org.cosysoft.device.node.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -33,5 +34,10 @@ public class DeviceController {
     @RequestMapping(value = "/{serialId}/screenshot", produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] screenshot(@PathVariable String serialId) {
         return deviceService.takeScreenShot(serialId);
+    }
+
+    @RequestMapping(value = "/{serialId}/adb/{cmd}")
+    public Result<String> executeADB(@PathVariable String serialId, @PathVariable String cmd) {
+        return deviceService.runAdbCommand(serialId, cmd);
     }
 }

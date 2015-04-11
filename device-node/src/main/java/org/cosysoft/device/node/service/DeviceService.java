@@ -5,7 +5,7 @@ import org.cosysoft.device.android.AndroidDevice;
 import org.cosysoft.device.android.impl.AndroidDeviceStore;
 import org.cosysoft.device.image.ImageUtils;
 import org.cosysoft.device.model.DeviceInfo;
-import org.springframework.cache.annotation.CacheConfig;
+import org.cosysoft.device.node.domain.Result;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +41,13 @@ public class DeviceService {
             deviceInfos.add(device.getDeviceInfo());
         });
         return deviceInfos;
+    }
+
+    public Result<String> runAdbCommand(String serialId, String cmd) {
+        Result<String> result = new Result<>();
+        AndroidDevice device = deviceStore.getDeviceBySerial(serialId);
+        String out = device.runAdbCommand(cmd);
+        result.setPayload(out);
+        return result;
     }
 }
