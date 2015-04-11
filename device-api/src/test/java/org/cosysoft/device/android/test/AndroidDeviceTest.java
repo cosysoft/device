@@ -40,6 +40,6 @@ public class AndroidDeviceTest {
 
 	@AfterClass
 	public static void tearDown() {
-		deviceStore.shutdown();
+		deviceStore.shutdownForcely();
 	}
 }
