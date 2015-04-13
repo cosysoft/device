@@ -51,7 +51,7 @@ public class AndroidDeviceStore implements DeviceStore {
      */
     public void initAndroidDevices(boolean shouldKeepAdbAlive)
             throws AndroidDeviceException {
-        DdmPreferences.setLogLevel(LogLevel.VERBOSE.getStringValue());
+//        DdmPreferences.setLogLevel(LogLevel.VERBOSE.getStringValue());
         this.initializeAdbConnection();
     }
 

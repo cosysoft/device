@@ -4,15 +4,16 @@
 var _ = require('underscore');
 
 var Device = function () {
-    this.devices = [{
-        nodeIp: '172.0.0.1', nodeName: 'Windows8', udid: '1111111111'
-    }, {
-        nodeIp: '172.0.0.1', nodeName: 'Windows8', udid: '2222222222222'
-    }, {
-        nodeIp: '172.0.0.1', nodeName: 'Windows8', udid: '2222222222222'
-    }, {
-        nodeIp: '172.0.0.1', nodeName: 'Windows8', udid: '2222222222222'
-    }];
+    this.devices = [
+        {
+            name: "xiaomi-2013022-ZDPB8PVCO7QGYDQG",
+            udid: "ZDPB8PVCO7QGYDQG",
+            osName: "ANDROID17(4.2.2)", nodeUri: 'http://172.0.0.1:8080/', nodeName: 'Windows8'
+        }, {
+            nodeIp: '172.0.0.1', nodeName: 'Windows8', udid: '2222222222222'
+        }, {
+            nodeIp: '172.0.0.1', nodeName: 'Windows8', udid: '2222222222222'
+        }];
 };
 
 Device.prototype.add = function (node) {

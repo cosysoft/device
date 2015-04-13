@@ -14,7 +14,7 @@ app.config(['$routeProvider',
                 templateUrl: 'device/node-list.html'
             }).
             otherwise({
-                redirectTo: '/device/device-list.html'
+                redirectTo: 'device'
             });
     }]);
 
