@@ -1,6 +1,6 @@
 package org.cosysoft.device.node.controller;
 
-import org.cosysoft.device.model.DeviceInfo;
+import org.cosysoft.device.node.domain.Device;
 import org.cosysoft.device.node.domain.Result;
 import org.cosysoft.device.node.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class DeviceController {
     DeviceService deviceService;
 
     @RequestMapping
-    public Collection<DeviceInfo> devices() {
+    public Collection<Device> devices() {
         return deviceService.getDevices();
     }
 

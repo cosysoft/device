@@ -63,9 +63,7 @@ project(':device-node') {
 
     apply plugin: 'spring-boot'
     
-    applicationDefaultJvmArgs = [
-            "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
-    ]
+
     dependencies {
         compile project(':device-api')
         compile("org.springframework.boot:spring-boot-starter-web")

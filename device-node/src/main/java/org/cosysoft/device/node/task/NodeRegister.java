@@ -1,10 +1,16 @@
 package org.cosysoft.device.node.task;
 
+import org.cosysoft.device.node.domain.Device;
+import org.cosysoft.device.node.service.DeviceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 
 /**
@@ -16,12 +22,22 @@ public class NodeRegister {
 
     private static final Logger LOG = LoggerFactory.getLogger(NodeRegister.class);
 
+    @Autowired
+    private DeviceService deviceService;
+
+    private RestTemplate restTemplate = new RestTemplate();
+
+
     @Value("${keeper.register}")
     private String registerUrl;
 
     @Scheduled(fixedDelay = 1000)
     public void register() {
-        LOG.info("register to {}", registerUrl);
+
+        List<Device> devices = deviceService.getDevices();
+        LOG.info("register to {} with devices{}", registerUrl, devices);
+        restTemplate.postForObject(registerUrl, devices, String.class);
+
     }
 
 }

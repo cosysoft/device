@@ -5,7 +5,10 @@ import org.cosysoft.device.android.AndroidDevice;
 import org.cosysoft.device.android.impl.AndroidDeviceStore;
 import org.cosysoft.device.image.ImageUtils;
 import org.cosysoft.device.model.DeviceInfo;
+import org.cosysoft.device.node.domain.Device;
 import org.cosysoft.device.node.domain.Result;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,9 @@ public class DeviceService {
 
     private DeviceStore deviceStore = AndroidDeviceStore.getInstance();
 
+    @Autowired
+    NodeService nodeService;
+
     @Cacheable(value = "avatars")
     public byte[] getAvatar(String serialId) {
         AndroidDevice device = deviceStore.getDeviceBySerial(serialId);
@@ -34,12 +40,18 @@ public class DeviceService {
         return ImageUtils.toByteArray(image);
     }
 
-    public List<DeviceInfo> getDevices() {
-        List<DeviceInfo> deviceInfos = new ArrayList<>();
+    public List<Device> getDevices() {
+        List<Device> devices = new ArrayList<>();
         deviceStore.getDevices().forEach(device -> {
-            deviceInfos.add(device.getDeviceInfo());
+            Device deviceExtInfo = new Device();
+            DeviceInfo deviceInfo = device.getDeviceInfo();
+            BeanUtils.copyProperties(deviceInfo, deviceExtInfo);
+            deviceExtInfo.setNodeIP(nodeService.getIp());
+            deviceExtInfo.setNodePort(nodeService.getPort());
+
+            devices.add(deviceExtInfo);
         });
-        return deviceInfos;
+        return devices;
     }
 
     public Result<String> runAdbCommand(String serialId, String cmd) {
