@@ -86,4 +86,19 @@ public class DeviceInfo {
 		this.cpu = cpu;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		DeviceInfo that = (DeviceInfo) o;
+
+		return serial.equals(that.serial);
+
+	}
+
+	@Override
+	public int hashCode() {
+		return serial.hashCode();
+	}
 }

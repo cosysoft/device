@@ -42,7 +42,7 @@ public class DeviceService {
 
     public List<Device> getDevices() {
         List<Device> devices = new ArrayList<>();
-        deviceStore.getDevices().forEach(device -> {
+        for (AndroidDevice device : deviceStore.getDevices()) {
             Device deviceExtInfo = new Device();
             DeviceInfo deviceInfo = device.getDeviceInfo();
             BeanUtils.copyProperties(deviceInfo, deviceExtInfo);
@@ -50,7 +50,7 @@ public class DeviceService {
             deviceExtInfo.setNodePort(nodeService.getPort());
 
             devices.add(deviceExtInfo);
-        });
+        }
         return devices;
     }
 

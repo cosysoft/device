@@ -18,6 +18,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by 兰天 on 2015/4/13.
@@ -34,14 +35,18 @@ public class MasterController {
     @Autowired
     private MasterDeviceService deviceService;
 
+    static final Pattern DIDRex = Pattern.compile("/hub/device/.*@.*/");
+
     @RequestMapping("/device/{serialId}/**")
     public ResponseEntity<?> mirrorRest(@RequestBody(required = false) String body, HttpMethod method,
                                         HttpServletRequest request, @PathVariable String serialId) throws URISyntaxException {
 
         Device device = deviceService.getDeviceByDid(serialId);
+        String path = DIDRex.matcher(request.getRequestURI()).replaceFirst("/api/device/" + device.getSerial() + "/");
 
         URI uri = new URI("http", null, device.getNodeIP(), device.getNodePort(),
-                request.getRequestURI().replace("/hub", "/api"), request.getQueryString(), null);
+                path, request.getQueryString(), null);
+        LOG.debug("redirect to {}", uri);
 
         Class<?> responseType = String.class;
         for (String part : byteUrls) {

@@ -14,8 +14,8 @@ subprojects {
 
     apply plugin: 'java'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
 
     repositories {
         maven {
@@ -62,7 +62,6 @@ project(':device-node') {
 
 
     apply plugin: 'spring-boot'
-    
 
     dependencies {
         compile project(':device-api')

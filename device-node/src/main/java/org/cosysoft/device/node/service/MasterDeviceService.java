@@ -28,9 +28,17 @@ public class MasterDeviceService {
         throw new DeviceNotFoundException(String.format("with did %s", did));
     }
 
-    public void putOrDelete(List<Device> ds){
-
-
+    public void putOrDelete(List<Device> ds) {
+        if (ds.size() < 0) {
+            return;
+        }
+        String ip = ds.get(0).getNodeIP();
+        for (Device device : devices) {
+            if (device.getNodeIP().equals(ip)) {
+                devices.remove(device); //safe for COW
+            }
+        }
+        devices.addAll(ds);
     }
 
 }
