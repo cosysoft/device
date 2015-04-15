@@ -3,6 +3,7 @@ package org.cosysoft.device.model;
 public class DeviceInfo {
 
 	private String name;
+	private String serial;
 	private String osName;
 	private String kernel;
 	private String ram;
@@ -11,9 +12,16 @@ public class DeviceInfo {
 
 	private Integer battery;
 	private Integer density;
-	
-	
-	
+
+
+	public String getSerial() {
+		return serial;
+	}
+
+	public void setSerial(String serial) {
+		this.serial = serial;
+	}
+
 	public Integer getBattery() {
 		return battery;
 	}
@@ -38,7 +46,6 @@ public class DeviceInfo {
 		this.name = name;
 	}
 
-	// private String
 	public String getOsName() {
 		return osName;
 	}
