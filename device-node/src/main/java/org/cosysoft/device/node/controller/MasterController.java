@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -37,7 +36,7 @@ public class MasterController {
 
     static final Pattern DIDRex = Pattern.compile("/hub/device/.*@.*/");
 
-    @RequestMapping("/device/{serialId}/**")
+    @RequestMapping(value = "/device/{serialId}/**", method = RequestMethod.POST)
     public ResponseEntity<?> mirrorRest(@RequestBody(required = false) String body, HttpMethod method,
                                         HttpServletRequest request, @PathVariable String serialId) throws URISyntaxException {
 

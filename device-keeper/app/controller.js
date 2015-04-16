@@ -5,7 +5,7 @@ var deviceControllers = angular.module('deviceControllers', []);
 
 deviceControllers.controller('DeviceCtrl', ['$scope', '$http',
     function ($scope, $http) {
-        $http.get('/api/devices').success(function(data) {
+        $http.get('hub/device').success(function(data) {
             $scope.devices = data;
         });
     }]);

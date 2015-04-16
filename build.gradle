@@ -36,33 +36,37 @@ subprojects {
         options.encoding = 'utf-8'
         //enable incremental compilation
     }
-
-    task echo << {
-        println ddmlib
-    }
 }
 
 project(':device-api') {
 
     ext {
-        ddmlib = '24.1.3'
+        ddmlibVersion = '24.1.3'
     }
     dependencies {
         compile 'org.apache.commons:commons-exec:1.2'
         compile 'commons-cli:commons-cli:1.2'
-        compile "com.android.tools.ddms:ddmlib:$ddmlib"
-        compile "com.android.tools:dvlib:$ddmlib"
-        compile "com.android.tools:sdklib:$ddmlib"
-        compile "com.android.tools:sdk-common:$ddmlib"
+        compile "com.android.tools.ddms:ddmlib:$ddmlibVersion"
+        compile "com.android.tools:dvlib:$ddmlibVersion"
+        compile "com.android.tools:sdklib:$ddmlibVersion"
+        compile "com.android.tools:sdk-common:$ddmlibVersion"
 
     }
 }
 
 project(':device-node') {
 
+    task copyKeeper(type: Copy) {
+        from('../device-keeper/app')
+        into(new File(sourceSets.main.output.resourcesDir, 'static'))
+    }
+    processResources.dependsOn = [copyKeeper];
 
     apply plugin: 'spring-boot'
 
+    bootRun {
+        addResources = false
+    }
     dependencies {
         compile project(':device-api')
         compile("org.springframework.boot:spring-boot-starter-web")

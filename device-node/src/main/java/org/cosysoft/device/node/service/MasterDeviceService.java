@@ -4,6 +4,8 @@ import org.cosysoft.device.exception.DeviceNotFoundException;
 import org.cosysoft.device.node.domain.Device;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -29,7 +31,7 @@ public class MasterDeviceService {
     }
 
     public void putOrDelete(List<Device> ds) {
-        if (ds.size() < 0) {
+        if (ds.size() < 1) {
             return;
         }
         String ip = ds.get(0).getNodeIP();
@@ -41,4 +43,12 @@ public class MasterDeviceService {
         devices.addAll(ds);
     }
 
+    public void deleteStale() {
+        long current = System.currentTimeMillis();
+        for (Device device : devices) {
+            if (current - device.getLastRegisterDate().getTime() > 3 * 1000) {
+                devices.remove(device);
+            }
+        }
+    }
 }
