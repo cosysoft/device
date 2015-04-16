@@ -15,7 +15,7 @@ git clone https://github.com/cosysoft/device.git
 cd device
 gradle bootRun
 ```
-Open http://localhost:8080/keeper in your browser
+Open <http://localhost:8080/keeper> in your browser
 
 ##device-api
 Focus on stabilized android device operation via Android Debug Bridge
