@@ -4,8 +4,6 @@ import org.cosysoft.device.exception.DeviceNotFoundException;
 import org.cosysoft.device.node.domain.Device;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 

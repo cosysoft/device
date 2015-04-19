@@ -1,9 +1,7 @@
 package org.cosysoft.device.android.impl;
 
 import com.android.ddmlib.AndroidDebugBridge;
-import com.android.ddmlib.DdmPreferences;
 import com.android.ddmlib.IDevice;
-import com.android.ddmlib.Log.LogLevel;
 import org.cosysoft.device.DeviceStore;
 import org.cosysoft.device.android.AndroidDevice;
 import org.cosysoft.device.exception.AndroidDeviceException;
@@ -14,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -105,43 +102,7 @@ public class AndroidDeviceStore implements DeviceStore {
         }
 
 
-        bridge.addDeviceChangeListener(new AndroidDebugBridge.IDeviceChangeListener() {
-            @Override
-            public void deviceConnected(IDevice device) {
-                logger.info("deviceConnected {}", device.getSerialNumber());
-                AndroidDevice ad = new DefaultHardwareDevice(device);
-                Iterator<Map.Entry<IDevice, AndroidDevice>> entryIterator = connectedDevices.entrySet().iterator();
-                boolean contain = false;
-                while (entryIterator.hasNext()) {
-                    Map.Entry entry = entryIterator.next();
-                    if (entry.getValue().equals(ad)) {
-                        contain = true;
-                        break;
-                    }
-                }
-                if (!contain) {
-                    connectedDevices.put(device, ad);
-                }
-            }
-
-            @Override
-            public void deviceDisconnected(IDevice device) {
-                logger.info("deviceDisconnected {}", device.getSerialNumber());
-                AndroidDevice ad = new DefaultHardwareDevice(device);
-                Iterator<Map.Entry<IDevice, AndroidDevice>> entryIterator = connectedDevices.entrySet().iterator();
-                while (entryIterator.hasNext()) {
-                    Map.Entry entry = entryIterator.next();
-                    if (entry.getValue().equals(ad)) {
-                        entryIterator.remove();
-                    }
-                }
-            }
-
-            @Override
-            public void deviceChanged(IDevice device, int changeMask) {
-                logger.info(device.getSerialNumber() + " " + changeMask);
-            }
-        });
+        bridge.addDeviceChangeListener(new DeviceChangeListener(connectedDevices));
     }
 
     @Override
@@ -179,4 +140,6 @@ public class AndroidDeviceStore implements DeviceStore {
         AndroidDebugBridge.disconnectBridge();
         AndroidDebugBridge.terminate();
     }
+
+
 }

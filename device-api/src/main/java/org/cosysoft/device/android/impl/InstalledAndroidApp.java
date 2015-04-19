@@ -1,9 +1,9 @@
 package org.cosysoft.device.android.impl;
 
+import org.cosysoft.device.android.AndroidApp;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.cosysoft.device.android.AndroidApp;
 
 public class InstalledAndroidApp implements AndroidApp {
 

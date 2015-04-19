@@ -1,9 +1,5 @@
 package org.cosysoft.device.android.impl;
 
-import java.io.File;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.commons.exec.CommandLine;
 import org.cosysoft.device.android.AndroidApp;
 import org.cosysoft.device.model.AppInfo;
@@ -11,6 +7,10 @@ import org.cosysoft.device.shell.AndroidSdk;
 import org.cosysoft.device.shell.AndroidSdkException;
 import org.cosysoft.device.shell.ShellCommand;
 import org.cosysoft.device.shell.ShellCommandException;
+
+import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DefaultAndroidApp implements AndroidApp {
 	private File apkFile;

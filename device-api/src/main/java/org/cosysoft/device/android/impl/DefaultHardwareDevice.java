@@ -1,14 +1,13 @@
 package org.cosysoft.device.android.impl;
 
-import java.awt.Dimension;
-import java.util.Locale;
-
+import com.android.ddmlib.IDevice;
+import com.android.ddmlib.RawImage;
 import org.cosysoft.device.android.DeviceTargetPlatform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.android.ddmlib.IDevice;
-import com.android.ddmlib.RawImage;
+import java.awt.*;
+import java.util.Locale;
 
 /**
  * reviewed

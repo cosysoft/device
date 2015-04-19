@@ -4,7 +4,8 @@
         md-gutter="8px" md-gutter-gt-sm="4px">
     <md-grid-tile ng-repeat="device in devices"
                   md-rowspan="2" md-colspan="2">
-        <md-icon md-svg-icon="{{device.name}}"></md-icon>
-        <md-grid-tile-footer><h3>{{device.did}}</h3></md-grid-tile-footer>
+        <img ng-src="{{'hub/device/'+device.did+'/avatar'}}" class="md-avatar" alt="{{device.did}}" />
+
+        <md-grid-tile-footer><h3>{{device.name}}</h3></md-grid-tile-footer>
     </md-grid-tile>
 </md-grid-list>

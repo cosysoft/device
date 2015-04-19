@@ -36,7 +36,7 @@ public class MasterController {
 
     static final Pattern DIDRex = Pattern.compile("/hub/device/.*@.*/");
 
-    @RequestMapping(value = "/device/{serialId}/**", method = RequestMethod.POST)
+    @RequestMapping(value = "/device/{serialId}/**")
     public ResponseEntity<?> mirrorRest(@RequestBody(required = false) String body, HttpMethod method,
                                         HttpServletRequest request, @PathVariable String serialId) throws URISyntaxException {
 
