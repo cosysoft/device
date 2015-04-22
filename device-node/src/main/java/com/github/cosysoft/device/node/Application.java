@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @SpringBootApplication
 @RestController
-@ComponentScan(basePackages = "org.cosysoft.device.node")
+@ComponentScan(basePackages = "com.github.cosysoft.device.node")
 @EnableScheduling
 @RequestMapping("/api/version")
 public class Application  {

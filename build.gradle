@@ -52,15 +52,101 @@ project(':device-api') {
         compile "com.android.tools:sdk-common:$ddmlibVersion"
 
     }
+
+    apply plugin: 'maven'
+    apply plugin: 'signing'
+
+    group = "com.github.cosysoft"
+    archivesBaseName = "device-api"
+
+    javadoc {
+        options.encoding = 'utf-8'
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from 'build/docs/javadoc'
+    }
+
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives jar
+        archives javadocJar
+        archives sourcesJar
+    }
+
+    signing {
+        sign configurations.archives
+    }
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+                pom.project {
+                    name 'ddmlib-facade'
+                    packaging 'jar'
+                    description 'A set of tools for operate android device via android debug bridge'
+                    url 'https://github.com/cosysoft/device'
+
+                    scm {
+                        connection 'scm:git:http://github.com/cosysoft/device.git'
+                        developerConnection 'scm:git:ssh://github.com:cosysoft/device.git'
+                        url 'https://github.com/cosysoft/device'
+                    }
+
+                    licenses {
+                        license {
+                            name 'The Apache License, Version 2.0'
+                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'cosyman'
+                            name 'Bluesky Yao'
+                            email 'cosyman@outlook.com'
+                        }
+                    }
+                }
+
+
+            }
+        }
+    }
 }
 
 project(':device-node') {
 
-    task copyKeeper(type: Copy) {
+    sourceSets {
+        main {
+            resources {
+                srcDir 'src/main/resources'
+                include '*.properties'
+
+                srcDir '../device-keeper'
+                include 'app/**'
+            }
+        }
+    }
+
+/*    task copyKeeper(type: Copy) {
         from('../device-keeper/app')
         into(new File(sourceSets.main.output.resourcesDir, 'static'))
     }
-    processResources.dependsOn = [copyKeeper];
+    processResources.dependsOn  copyKeeper*/
 
     apply plugin: 'spring-boot'
 
