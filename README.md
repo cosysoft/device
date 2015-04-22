@@ -4,23 +4,44 @@ A lot of code quote from selendroid,but we will foucs on simplify ddmlib's usage
 
 
 
-##device-keeper
+## device-keeper
 A distributed android device monitor system based on device-api
 
-###Quick Start
+### Quick Start
 Plug a android device via usb or boot an emulator
 
 ```bash
 git clone https://github.com/cosysoft/device.git
-cd device
+cd device/device-keeper
+bower install
+
+cd ..
 gradle bootRun
 ```
 Open <http://localhost:8080/keeper> in your browser
 
-##device-api
+## device-api
 Focus on stabilized android device operation via Android Debug Bridge
 
-###Take Devices
+### Quick Start
+#### Download
+1. Maven
+```xml
+<dependency>
+		<groupId>com.github.cosysoft</groupId>
+		<artifactId>device-api</artifactId>
+		<version>0.9.0</version>
+</dependency>
+```
+2. Gradle
+```groovy
+dependencies {
+		compile 'com.github.cosysoft:device-api:0.9.0'
+}
+```
+
+
+### Take Devices
 
 ```java
 TreeSet<AndroidDevice> devices = AndroidDeviceStore.getInstance()
@@ -29,7 +50,7 @@ AndroidDevice device = devices.pollFirst();
 System.out.println(device.getName());
 ```
 
-###Screenshot
+### Screenshot
 
 ```java
 BufferedImage image = device.takeScreenshot();
@@ -38,7 +59,7 @@ String imagePath = new File(System.getProperty("java.io.tmpdir"),
 ImageUtils.writeToFile(image, imagePath);
 ```
 
-###Install/Uninstall App
+### Install/Uninstall App
 
 ```java
 AndroidApp app = new DefaultAndroidApp(new File(
@@ -49,7 +70,7 @@ if (device.isInstalled(app)) {
 }
 ```
 
-###LogCat with custom filter
+### LogCat with custom filter
 ```java
 final LogCatFilter filter = new LogCatFilter("", "", "com.android", "",
 		"", LogLevel.WARN);
@@ -68,10 +89,10 @@ device.addLogCatListener(lcl);
 Thread.sleep(60000);
 ```
 
-##Monitor
+## Monitor
 Ddmlib can monitor one app's cpu/heap/threads and much more,but we need list running client first.
 
-###List running client for app
+### List running client for app
 ```java
 List<ClientDataInfo> clientDataInfos = device.getClientDatasInfo();
 for (ClientDataInfo client : clientDataInfos) {
@@ -80,5 +101,5 @@ for (ClientDataInfo client : clientDataInfos) {
 }
 ```
 
-##License
+## License
 [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
