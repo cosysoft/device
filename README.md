@@ -25,7 +25,7 @@ Focus on stabilized android device operation via Android Debug Bridge
 
 ### Quick Start
 #### Download
-1. Maven
+Maven
 ```xml
 <dependency>
 		<groupId>com.github.cosysoft</groupId>
@@ -33,7 +33,7 @@ Focus on stabilized android device operation via Android Debug Bridge
 		<version>0.9.0</version>
 </dependency>
 ```
-2. Gradle
+Gradle
 ```groovy
 dependencies {
 		compile 'com.github.cosysoft:device-api:0.9.0'
