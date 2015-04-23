@@ -10,7 +10,6 @@ public class DeviceUnlockException extends NestedException {
 
 	public DeviceUnlockException(String msg) {
 		super(msg);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

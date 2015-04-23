@@ -158,7 +158,7 @@ public class MIDeviceUtility {
 				while ((System.currentTimeMillis() - start) < milliseconds) {
 					Thread.sleep(500);
 					if (miDevice.isConfirm() && count++ > 1) {
-						logger.debug("确定安装");
+						logger.debug("Confirm");
 						miDevice.crossConfirmView();
 						break;
 					} else {
@@ -167,9 +167,9 @@ public class MIDeviceUtility {
 				}
 
 			} catch (Exception e) {
-				// logger.info("InstallHelperTask 超时后任务暂停", e);
+				// logger.info("InstallHelperTask Timeout", e);
 			} finally {
-				logger.debug("fishined");
+				logger.debug("finished");
 				finished = true;
 			}
 			return null;

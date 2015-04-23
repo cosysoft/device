@@ -10,8 +10,8 @@ buildscript {
 }
 
 subprojects {
-    version '0.9.0-SNAPSHOT'
-
+//    version '0.9.0-SNAPSHOT'
+    version '0.9.1'
     apply plugin: 'java'
 
     sourceCompatibility = 1.7
@@ -36,6 +36,12 @@ subprojects {
         options.encoding = 'utf-8'
         //enable incremental compilation
     }
+    javadoc {
+        options {
+            locale = 'en_US'
+            encoding = 'UTF-8'
+        }
+    }
 }
 
 project(':device-api') {
@@ -58,10 +64,6 @@ project(':device-api') {
 
     group = "com.github.cosysoft"
     archivesBaseName = "device-api"
-
-    javadoc {
-        options.encoding = 'utf-8'
-    }
 
     task javadocJar(type: Jar, dependsOn: javadoc) {
         classifier = 'javadoc'

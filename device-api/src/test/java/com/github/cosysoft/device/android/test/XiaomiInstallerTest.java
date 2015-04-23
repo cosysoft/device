@@ -30,7 +30,6 @@ public class XiaomiInstallerTest extends AndroidDeviceTest {
 		for (AndroidDevice device : getDevices()) {
 			MIDeviceUtility.testInstall(device);
 			MIDeviceUtility.install(device, app);
-			// s
 			// device.install(app);
 		}
 	}
