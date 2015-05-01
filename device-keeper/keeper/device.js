@@ -8,11 +8,36 @@ var Device = function () {
         {
             name: "xiaomi-2013022-ZDPB8PVCO7QGYDQG",
             udid: "ZDPB8PVCO7QGYDQG",
+            avatarUri: "mock/avatar.png",
+            osName: "ANDROID17(4.2.2)", nodeUri: 'http://172.0.0.1:8080/', nodeName: 'Windows8'
+        },
+        {
+            name: "xiaomi-2013022-ZDPB8PVCO7QGYDQG",
+            udid: "ZDPB8PVCO7QGYDQG",
+            avatarUri: "mock/avatar.png",
             osName: "ANDROID17(4.2.2)", nodeUri: 'http://172.0.0.1:8080/', nodeName: 'Windows8'
         }, {
-            nodeIp: '172.0.0.1', nodeName: 'Windows8', udid: '2222222222222'
+            name: "xiaomi-2013022-ZDPB8PVCO7QGYDQG",
+            udid: "ZDPB8PVCO7QGYDQG",
+            avatarUri: "mock/avatar.png",
+            osName: "ANDROID17(4.2.2)", nodeUri: 'http://172.0.0.1:8080/', nodeName: 'Windows8'
+        },
+        {
+            name: "xiaomi-2013022-ZDPB8PVCO7QGYDQG",
+            udid: "ZDPB8PVCO7QGYDQG",
+            avatarUri: "mock/avatar.png",
+            osName: "ANDROID17(4.2.2)", nodeUri: 'http://172.0.0.1:8080/', nodeName: 'Windows8'
         }, {
-            nodeIp: '172.0.0.1', nodeName: 'Windows8', udid: '2222222222222'
+            name: "xiaomi-2013022-ZDPB8PVCO7QGYDQG",
+            udid: "ZDPB8PVCO7QGYDQG",
+            avatarUri: "mock/avatar.png",
+            osName: "ANDROID17(4.2.2)", nodeUri: 'http://172.0.0.1:8080/', nodeName: 'Windows8'
+        },
+        {
+            name: "xiaomi-2013022-ZDPB8PVCO7QGYDQG",
+            udid: "ZDPB8PVCO7QGYDQG",
+            avatarUri: "mock/avatar.png",
+            osName: "ANDROID17(4.2.2)", nodeUri: 'http://172.0.0.1:8080/', nodeName: 'Windows8'
         }];
 };
 

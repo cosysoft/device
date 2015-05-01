@@ -38,6 +38,10 @@ public class Device extends DeviceInfo {
         this.lastRegisterDate = lastRegisterDate;
     }
 
+    public String getAvatarUri() {
+        return "hub/device/" + this.getDid() + "/avatar";
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

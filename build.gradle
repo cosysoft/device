@@ -132,23 +132,23 @@ project(':device-api') {
 
 project(':device-node') {
 
-    sourceSets {
+/*    sourceSets {
         main {
             resources {
                 srcDir 'src/main/resources'
                 include '*.properties'
 
                 srcDir '../device-keeper'
-                include 'app/**'
+                include 'app*//**'
             }
         }
-    }
+    }*/
 
-/*    task copyKeeper(type: Copy) {
+    task copyKeeper(type: Copy) {
         from('../device-keeper/app')
-        into(new File(sourceSets.main.output.resourcesDir, 'static'))
+        into(new File(sourceSets.main.output.resourcesDir, 'app'))
     }
-    processResources.dependsOn  copyKeeper*/
+    processResources.dependsOn  copyKeeper
 
     apply plugin: 'spring-boot'
 

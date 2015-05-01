@@ -1,0 +1,143 @@
+<html lang="en" ng-app="KeeperApp">
+<head>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1"/>
+    <meta charset="UTF-8">
+    <title></title> <style>
+    .gridListdemoBasicUsage md-grid-list {
+        margin: 8px; }
+    .gridListdemoBasicUsage .gray {
+        background: #f5f5f5; }
+    .gridListdemoBasicUsage .green {
+        background: #b9f6ca; }
+    .gridListdemoBasicUsage .yellow {
+        background: #ffff8d; }
+    .gridListdemoBasicUsage .blue {
+        background: #84ffff; }
+    .gridListdemoBasicUsage .purple {
+        background: #b388ff; }
+    .gridListdemoBasicUsage .red {
+        background: #ff8a80; }
+    .gridListdemoBasicUsage md-grid-tile {
+        transition: all 400ms ease-out 50ms; }
+</style>
+</head>
+<body layout="row" ng-controller="AppCtrl">
+
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left"
+            md-is-locked-open="$mdMedia('gt-sm')">
+    <md-toolbar layout="row">
+        <button ng-click="toggleSidenav('left')" hide-gt-sm class="menuBtn">
+            <span class="visually-hidden">Menu</span>
+        </button>
+        <h1 class="md-toolbar-tools" layout-align-gt-sm="left">Android Device Keeper</h1>
+    </md-toolbar>
+
+    <md-content flex role="navigation" class="md-default-theme">
+        <ul class="docs-menu">
+            <li ng-repeat="menu in menus" ng-class="{'childActive' : isSectionSelected(menu)}">
+                <a class="md-button" href="#{{menu.hash}}"><span>{{menu.name}}</span></a>
+            </li>
+        </ul>
+    </md-content>
+</md-sidenav>
+
+
+<div layout="column" flex>
+    <md-toolbar layout="row">
+    </md-toolbar>
+
+    <div layout="column" flex id="content">
+        <md-content layout="column" flex class="md-padding">
+            <md-grid-list
+                    md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6"
+                    md-row-height-gt-md="1:1" md-row-height="2:2"
+                    md-gutter="12px" md-gutter-gt-sm="8px" >
+                <md-grid-tile class="gray"
+                              md-rowspan="3" md-colspan="2" md-colspan-sm="1">
+                    <md-grid-tile-footer>
+                        <h3>#1: (3r x 2c)</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+                <md-grid-tile class="green">
+                    <md-grid-tile-footer>
+                        <h3>#2: (1r x 1c)</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+                <md-grid-tile class="yellow">
+                    <md-grid-tile-footer>
+                        <h3>#3: (1r x 1c)</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+                <md-grid-tile class="blue"
+                              md-rowspan="2">
+                    <md-grid-tile-footer>
+                        <h3>#4: (2r x 1c)</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+                <md-grid-tile class="red"
+                              md-rowspan="2" md-colspan="2" md-colspan-sm="1">
+                    <md-grid-tile-footer>
+                        <h3>#5: (2r x 2c)</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+                <md-grid-tile class="green"
+                              md-rowspan="2" >
+                    <md-grid-tile-footer>
+                        <h3>#6: (2r x 1c)</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile> <md-grid-tile class="green"
+                                              md-rowspan="2" >
+                <md-grid-tile-footer>
+                    <h3>#6: (2r x 1c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile> <md-grid-tile class="green"
+                                          md-rowspan="2" >
+                <md-grid-tile-footer>
+                    <h3>#6: (2r x 1c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile> <md-grid-tile class="green"
+                                          md-rowspan="2" >
+                <md-grid-tile-footer>
+                    <h3>#6: (2r x 1c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile> <md-grid-tile class="green"
+                                          md-rowspan="2" >
+                <md-grid-tile-footer>
+                    <h3>#6: (2r x 1c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile> <md-grid-tile class="green"
+                                          md-rowspan="2" >
+                <md-grid-tile-footer>
+                    <h3>#6: (2r x 1c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile> <md-grid-tile class="green"
+                                          md-rowspan="2" >
+                <md-grid-tile-footer>
+                    <h3>#6: (2r x 1c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile> <md-grid-tile class="green"
+                                          md-rowspan="2" >
+                <md-grid-tile-footer>
+                    <h3>#6: (2r x 1c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+            </md-grid-list>
+        </md-content>
+    </div>
+</div>
+
+
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="bower_components/angular-aria/angular-aria.min.js"></script>
+
+<script src="bower_components/angular-material/angular-material.min.js"></script>
+
+<script src="app.js"></script>
+<script src="controller.js"></script>
+</body>
+</html>

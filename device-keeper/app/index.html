@@ -7,24 +7,30 @@
     <meta charset="UTF-8">
     <title></title>
 </head>
-<body layout="column" ng-controller="AppCtrl">
+<body layout="row" ng-controller="AppCtrl">
 
-<md-toolbar layout="row">
-    <button ng-click="toggleSidenav('left')" hide-gt-sm class="menuBtn">
-        <span class="visually-hidden">Menu</span>
-    </button>
-    <h1 class="md-toolbar-tools" layout-align-gt-sm="left">Android Device Keeper</h1>
-</md-toolbar>
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left"
+            md-is-locked-open="$mdMedia('gt-sm')">
+    <md-toolbar layout="row">
+        <button ng-click="toggleSidenav('left')" hide-gt-sm class="menuBtn">
+            <span class="visually-hidden">Menu</span>
+        </button>
+        <h1 class="md-toolbar-tools" layout-align-gt-sm="left">Android Device Keeper</h1>
+    </md-toolbar>
 
-<div layout="row" flex>
-    <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left"
-                md-is-locked-open="$mdMedia('gt-sm')">
+    <md-content flex role="navigation" class="md-default-theme">
         <ul class="docs-menu">
             <li ng-repeat="menu in menus" ng-class="{'childActive' : isSectionSelected(menu)}">
                 <a class="md-button" href="#{{menu.hash}}"><span>{{menu.name}}</span></a>
             </li>
         </ul>
-    </md-sidenav>
+    </md-content>
+</md-sidenav>
+
+
+<div layout="column" flex>
+    <md-toolbar layout="row">
+    </md-toolbar>
 
     <div layout="column" flex id="content">
         <md-content layout="column" flex class="md-padding">
