@@ -8,6 +8,17 @@ A lot of code quote from selendroid,but we will foucs on simplify ddmlib's usage
 A distributed android device monitor system based on device-api
 
 ### Quick Start
+
+You require the following to build:
+
+* Latest stable [Oracle JDK 7+](http://www.oracle.com/technetwork/java/)
+* Latest stable [Gradle 2.4+](http://gradle.org/downloads/)
+* Android SDK
+* node.js and bower
+
+And be sure that JAVA_HOME,ANDROID_SDK at your environment path.
+
+
 Plug a android device via usb or boot an emulator
 
 ```bash
@@ -30,13 +41,13 @@ Maven
 <dependency>
 		<groupId>com.github.cosysoft</groupId>
 		<artifactId>device-api</artifactId>
-		<version>0.9.0</version>
+		<version>0.9.1</version>
 </dependency>
 ```
 Gradle
 ```groovy
 dependencies {
-		compile 'com.github.cosysoft:device-api:0.9.0'
+		compile 'com.github.cosysoft:device-api:0.9.1'
 }
 ```
 
