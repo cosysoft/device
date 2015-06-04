@@ -16,7 +16,7 @@ You require the following to build:
 * Android SDK
 * node.js and bower
 
-And be sure that JAVA_HOME,ANDROID_SDK at your environment path.
+And be sure that JAVA_HOME,ANDROID_HOME at your environment path.
 
 
 Plug a android device via usb or boot an emulator
