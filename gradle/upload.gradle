@@ -1,0 +1,50 @@
+apply plugin: 'signing'
+
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+            pom.project {
+                name 'ddmlib-facade'
+                packaging 'jar'
+                description 'A set of tools for operate android device via android debug bridge'
+                url 'https://github.com/cosysoft/device'
+
+                scm {
+                    connection 'scm:git:http://github.com/cosysoft/device.git'
+                    developerConnection 'scm:git:ssh://github.com:cosysoft/device.git'
+                    url 'https://github.com/cosysoft/device'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'cosyman'
+                        name 'Bluesky Yao'
+                        email 'cosyman@outlook.com'
+                    }
+                }
+            }
+
+
+        }
+    }
+}

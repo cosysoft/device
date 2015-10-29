@@ -31,6 +31,8 @@ public class Readme extends AndroidDeviceTest {
 
 	@Test
 	public void takeScreenshot() {
+
+
 		AndroidDevice device = getDevices().pollFirst();
 		
 		Profiler profiler = new Profiler("screen");
