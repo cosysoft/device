@@ -20,7 +20,7 @@ public class AndroidDeviceStore implements DeviceStore {
     protected static final Logger logger = LoggerFactory
             .getLogger(AndroidDeviceStore.class);
 
-    private Map<IDevice, AndroidDevice> connectedDevices = new HashMap<>();
+    private Map<IDevice, AndroidDevice> connectedDevices = new HashMap<IDevice, AndroidDevice>();
 
     private AndroidDebugBridge bridge;
     private boolean shouldKeepAdbAlive = false;
