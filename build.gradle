@@ -8,11 +8,11 @@ buildscript {
 }
 
 subprojects {
-    version '0.9.2'
+    version '0.9.3-SNAPSHOT'
     apply plugin: 'java'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
 
     repositories {
         mavenCentral()
@@ -42,7 +42,7 @@ subprojects {
 project(':device-api') {
 
     ext {
-        ddmlibVersion = '24.3.1'
+        ddmlibVersion = '24.5.0'
     }
     dependencies {
         compile 'org.apache.commons:commons-exec:1.2'
