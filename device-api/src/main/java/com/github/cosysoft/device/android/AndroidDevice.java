@@ -54,6 +54,9 @@ public interface AndroidDevice {
 
 	void invokeActivity(String activity);
 
+	String getDump();
+
+	boolean handlePopBox(String deviceBrand);
 	/**
 	 * io.appium.unlock/.Unlock
 	 */

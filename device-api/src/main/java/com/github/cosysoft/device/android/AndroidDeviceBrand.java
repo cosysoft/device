@@ -8,7 +8,7 @@ import java.util.List;
  */
 public final class AndroidDeviceBrand {
 
-    private static final List<AndroidDeviceBrand> brands = new ArrayList<>();
+    private static final List<AndroidDeviceBrand> brands = new ArrayList<AndroidDeviceBrand>();
 
     public static final AndroidDeviceBrand XIAOMI_MI_3W = createInstance(
             "xiaomi", "mi_3w");
@@ -16,6 +16,8 @@ public final class AndroidDeviceBrand {
             "xiaomi", "mi_2");
     public static final AndroidDeviceBrand XIAOMI_MI_3 = createInstance(
             "xiaomi", "mi_3");
+    public static final AndroidDeviceBrand XIAOMI_MI_4W = createInstance(
+            "xiaomi", "mi_4w");
     public static final AndroidDeviceBrand OPPO_X9007 = createInstance("oppo",
             "x9007");
     public static final AndroidDeviceBrand MEIZU_M355 = createInstance("meizu",
@@ -58,7 +60,7 @@ public final class AndroidDeviceBrand {
     public boolean isXiaoMi() {
         return this.equals(AndroidDeviceBrand.XIAOMI_MI_2)
                 || this.equals(AndroidDeviceBrand.XIAOMI_MI_3)
-                || this.equals(AndroidDeviceBrand.XIAOMI_MI_3W);
+                || this.equals(AndroidDeviceBrand.XIAOMI_MI_3W) || this.equals(AndroidDeviceBrand.XIAOMI_MI_4W);
     }
 
     private static AndroidDeviceBrand createInstance(String manufacture,
