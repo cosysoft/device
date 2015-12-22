@@ -14,6 +14,7 @@ import com.github.cosysoft.device.shell.AndroidSdkException;
 import com.github.cosysoft.device.shell.ShellCommand;
 import com.github.cosysoft.device.shell.ShellCommandException;
 import org.apache.commons.exec.CommandLine;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import com.github.cosysoft.device.android.AndroidDeviceBrand;
@@ -25,9 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.profiler.Profiler;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -291,6 +290,189 @@ public abstract class AbstractDevice implements AndroidDevice {
         }
 
     }
+    /**
+            * get current android page's dump file
+            */
+    public String getDump(){
+        pushAutomator2Device();
+        runtest();
+        String path = pullDump2PC();
+        String xml = "";
+        try {
+            FileInputStream fileInputStream = new FileInputStream(path);
+            @SuppressWarnings("resource")
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(fileInputStream));
+            StringBuffer buffer = new StringBuffer();
+            String line = "";
+            while ((line = in.readLine()) != null) {
+                buffer.append(line);
+            }
+            xml = buffer.toString();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return xml;
+    }
+    /**
+     * try to click GPS Popup window
+     */
+    public boolean handlePopBox(String deviceBrand){
+        pushHandleGps2Device();
+        CommandLine exeCommand= null;
+        if(deviceBrand.contains("HTC")){
+
+            exeCommand = adbCommand("shell", "uiautomator", "runtest",
+                    "/data/local/tmp/handlePopBox.jar", "-c", "com.test.device.gps.HTCGPSTest");}
+
+        else if(deviceBrand.contains("Meizu")){
+
+            exeCommand = adbCommand("shell", "uiautomator", "runtest",
+                    "/data/local/tmp/handlePopBox.jar", "-c", "com.test.device.gps.MeizuGPSTest");
+        }
+
+        String output = executeCommandQuietly(exeCommand);
+        log.debug("run test {}", output);
+
+        try {
+            // give it a second to recover from the activity start
+            Thread.sleep(1000);
+        } catch (InterruptedException ie) {
+            throw new RuntimeException(ie);
+        }
+        return output.contains("OK");
+    }
+    /**
+     * Push handlePopBox.jar to android tmp folder
+     * @return push device successful or not
+     */
+    private boolean pushHandleGps2Device() {
+
+        InputStream io = AbstractDevice.class.getResourceAsStream("handlePopBox.jar");
+        File dest = new File(FileUtils.getTempDirectory(), "handlePopBox.jar");
+
+        try {
+            FileUtils.copyInputStreamToFile(io, dest);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CommandLine pushcommand = adbCommand("push ", dest.getAbsolutePath(),"/data/local/tmp/");
+        String outputPush = executeCommandQuietly(pushcommand);
+        log.debug("Push automator.jar to device {}", outputPush);
+
+        try {
+            // give it a second to recover from the activity start
+            Thread.sleep(1000);
+        } catch (InterruptedException ie) {
+            throw new RuntimeException(ie);
+        }
+        return outputPush.contains("KB/s");
+    }
+
+    /**
+     * Push automator.jar to android tmp folder
+     * @return push device successful or not
+     */
+    public boolean pushAutomator2Device(){
+        InputStream io = AbstractDevice.class.getResourceAsStream("automator.jar");
+        File dest = new File(FileUtils.getTempDirectory(), "automator.jar");
+
+        try {
+            FileUtils.copyInputStreamToFile(io, dest);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CommandLine pushcommand = adbCommand("push ", dest.getAbsolutePath(),"/data/local/tmp/");
+        String outputPush = executeCommandQuietly(pushcommand);
+        log.debug("Push automator.jar to device {}", outputPush);
+
+        try {
+            // give it a second to recover from the activity start
+            Thread.sleep(1000);
+        } catch (InterruptedException ie) {
+            throw new RuntimeException(ie);
+        }
+        return outputPush.contains("KB/s");
+    }
+
+    /**
+     * clean file dump.xml, qian.xml, uidump.xml in tmp folder
+     */
+    public void cleanTemp(){
+        CommandLine dumpcommand = adbCommand("shell", "rm", "-r",
+                "/data/local/tmp/local/tmp/dump.xml");
+        executeCommandQuietly(dumpcommand);
+        try {
+            // give it a second to recover from the activity start
+            Thread.sleep(1000);
+        } catch (InterruptedException ie) {
+            throw new RuntimeException(ie);
+        }
+
+        CommandLine qiancommand = adbCommand("shell", "rm", "-r",
+                "/data/local/tmp/local/tmp/qian.xml");
+        String output = executeCommandQuietly(qiancommand);
+        log.debug("Delete file qian.xml: {}", output);
+        try {
+            // give it a second to recover from the activity start
+            Thread.sleep(1000);
+        } catch (InterruptedException ie) {
+            throw new RuntimeException(ie);
+        }
+
+        CommandLine command = adbCommand("shell", "rm", "-r",
+                "/data/local/tmp/uidump.xml");
+        executeCommandQuietly(command);
+        try {
+            // give it a second to recover from the activity start
+            Thread.sleep(1000);
+        } catch (InterruptedException ie) {
+            throw new RuntimeException(ie);
+        }
+    }
+
+    /**
+     * run command to get dump file
+     * @return
+     */
+    public boolean runtest(){
+        cleanTemp();
+        CommandLine command = adbCommand("shell", "uiautomator", "runtest",
+                "/data/local/tmp/automator.jar", "-c", "com.uia.example.my.test");
+        String output = executeCommandQuietly(command);
+        log.debug("run test {}", output);
+
+        try {
+            // give it a second to recover from the activity start
+            Thread.sleep(1000);
+        } catch (InterruptedException ie) {
+            throw new RuntimeException(ie);
+        }
+        return output.contains("OK");
+    }
+
+    /**
+     * pull dump file from android device to pc
+     * @return pc dump file path
+     */
+    public String pullDump2PC(){
+
+        String serial = device.getSerialNumber();
+        File dest = new File(FileUtils.getTempDirectory(), serial
+                + ".xml");
+        String path = dest.getPath();
+        log.debug("pull dump file to pc's path {}", path);
+
+        CommandLine commandpull = adbCommand("pull", "/data/local/tmp/local/tmp/qian.xml", path);
+        String out = executeCommandQuietly(commandpull);
+        log.debug("pull dump file to pc's result {}", out);
+        return path;
+    }
+
 
     @Override
     public void kill(AndroidApp aut) {

@@ -1,6 +1,8 @@
 buildscript {
     repositories {
-        mavenCentral()
+        maven {
+            url 'http://maven.dev.sh.ctripcorp.com:8081/nexus/content/groups/public/'
+        }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.7.RELEASE")
@@ -8,14 +10,16 @@ buildscript {
 }
 
 subprojects {
-    version '0.9.2'
+    version '0.10.1'
     apply plugin: 'java'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
 
     repositories {
-        mavenCentral()
+        maven {
+            url 'http://maven.dev.sh.ctripcorp.com:8081/nexus/content/groups/public/'
+        }
     }
     dependencies {
 
@@ -75,10 +79,9 @@ project(':device-api') {
         archives sourcesJar
     }
 
-    if(rootProject.hasProperty('ossrhUsername')){
+    if (rootProject.hasProperty('ossrhUsername')) {
         apply from: "$rootProject.projectDir/gradle/upload.gradle"
     }
-
 
 
 }
