@@ -82,8 +82,8 @@ project(':device-api') {
     apply from: "$rootProject.projectDir/gradle/upload.gradle"
   }
 
-  if (rootProject.hasProperty('mvnPassword')) {
-    apply from: "$rootProject.projectDir/gradle/publishMaven.gradlee"
+  if (rootProject.hasProperty('inexusPassword')) {
+    apply from: "$rootProject.projectDir/gradle/publishInternalNexus.gradle"
   }
 }
 

@@ -17,14 +17,14 @@ publishing {
   repositories {
     maven {
       credentials {
-        username mvnUser
-        password mvnPassword
+        username inexusUser
+        password inexusPassword
       }
 
       if (project.version.endsWith('-SNAPSHOT')) {
-        url mvnSnapshotRepo
+        url inexusSnapshotRepo
       } else {
-        url mvnReleaseRepo
+        url inexusReleaseRepo
       }
     }
   }
