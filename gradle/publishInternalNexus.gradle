@@ -1,0 +1,31 @@
+apply plugin: 'maven-publish'
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      from components.java
+
+      artifact sourcesJar {
+        classifier "sources"
+      }
+
+      artifact javadocJar {
+        classifier "javadoc"
+      }
+    }
+  }
+  repositories {
+    maven {
+      credentials {
+        username inexusUser
+        password inexusPassword
+      }
+
+      if (project.version.endsWith('-SNAPSHOT')) {
+        url inexusSnapshotRepo
+      } else {
+        url inexusReleaseRepo
+      }
+    }
+  }
+}

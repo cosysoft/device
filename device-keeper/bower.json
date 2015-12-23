@@ -15,10 +15,11 @@
     "tests"
   ],
   "dependencies": {
-    "angular-route": "~1.4.1",
-    "angular-material": "~0.9.7"
+    "angular-route": "~1.4.8",
+    "angular-material": "~1.0.0",
+    "underscore": "^1.8.2"
   },
   "resolutions": {
-    "angular": "1.4.0"
+    "angular": "1.4.8"
   }
 }
