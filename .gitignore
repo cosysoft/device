@@ -20,7 +20,10 @@ test-output
 *.DS_Store
 
 .idea
+out
 *.iml
+*.ipr
+*.iws
 
 bower_components/
 node_modules/

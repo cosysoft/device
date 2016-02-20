@@ -9,9 +9,22 @@ buildscript {
   }
 }
 
+apply plugin: 'idea'
+
+
+idea {
+  project {
+    languageLevel = '1.7'
+  }
+}
+
+
 subprojects {
   version '0.9.3-SNAPSHOT'
   apply plugin: 'java'
+  apply plugin: 'idea'
+
+
 
   sourceCompatibility = 1.7
   targetCompatibility = 1.7
