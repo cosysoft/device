@@ -1,6 +1,7 @@
 buildscript {
   repositories {
     maven {
+
       url 'http://maven.dev.sh.ctripcorp.com:8081/nexus/content/groups/public/'
     }
   }
@@ -33,6 +34,7 @@ subprojects {
     maven {
       url 'http://maven.dev.sh.ctripcorp.com:8081/nexus/content/groups/public/'
     }
+    mavenCentral()
   }
   dependencies {
 

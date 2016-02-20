@@ -1,119 +1,125 @@
 package com.github.cosysoft.device.android;
 
+import com.android.ddmlib.Client;
+import com.android.ddmlib.IDevice;
+import com.android.ddmlib.logcat.LogCatListener;
+import com.github.cosysoft.device.model.ClientDataInfo;
+import com.github.cosysoft.device.model.DeviceInfo;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Locale;
 
-import com.github.cosysoft.device.model.ClientDataInfo;
-import com.github.cosysoft.device.model.DeviceInfo;
-
-import com.android.ddmlib.Client;
-import com.android.ddmlib.IDevice;
-import com.android.ddmlib.logcat.LogCatListener;
-
 /**
- * 
  * @author ltyao
- *
  */
 public interface AndroidDevice {
 
-	/**
-	 * test only
-	 * 
-	 * @return
-	 */
-	IDevice getDevice();
+  /**
+   * test only
+   */
+  IDevice getDevice();
 
-	String getSerialNumber();
+  String getSerialNumber();
 
-	Locale getLocale();
+  Locale getLocale();
 
-	String getName();
+  String getName();
 
-	AndroidDeviceBrand getBrand();
+  AndroidDeviceBrand getBrand();
 
-	Dimension getScreenSize();
+  Dimension getScreenSize();
 
-	void tap(int x, int y);
+  void tap(int x, int y);
 
-	void swipe(int x1, int y1, int x2, int y2);
+  void swipe(int x1, int y1, int x2, int y2);
 
-	BufferedImage takeScreenshot();
+  /**
+   * @see KeyEvent
+   */
+  void inputKeyevent(int value);
 
-	void takeScreenshot(String fileUrl);
+  BufferedImage takeScreenshot();
 
-	boolean isDeviceReady();
+  void takeScreenshot(String fileUrl);
 
-	boolean isScreenOn();
+  boolean isDeviceReady();
 
-	DeviceTargetPlatform getTargetPlatform();
+  boolean isScreenOn();
 
-	String currentActivity();
+  DeviceTargetPlatform getTargetPlatform();
 
-	void invokeActivity(String activity);
+  String currentActivity();
 
-	String getDump();
+  void invokeActivity(String activity);
 
-	boolean handlePopBox(String deviceBrand);
-	/**
-	 * io.appium.unlock/.Unlock
-	 */
-	void unlock();
+  boolean start(AndroidApp app);
 
-	void install(AndroidApp app);
+  /**
+   * dump current activity view xml
+   */
+  String getDump();
 
-	boolean isInstalled(String appBasePackage);
+  boolean handlePopBox(String deviceBrand);
 
-	boolean isInstalled(AndroidApp app);
+  /**
+   * io.appium.unlock/.Unlock
+   */
+  void unlock();
 
-	void uninstall(AndroidApp app);
+  void install(AndroidApp app);
 
-	void uninstall(String appBasePackage);
+  boolean isInstalled(String appBasePackage);
 
-	boolean start(AndroidApp app);
+  boolean isInstalled(AndroidApp app);
 
-	void forwardPort(int local, int remote);
+  void uninstall(AndroidApp app);
 
-	void removeForwardPort(int local);
+  void uninstall(String appBasePackage);
 
-	void clearUserData(AndroidApp app);
+  void forwardPort(int local, int remote);
 
-	void clearUserData(String appBasePackage);
+  void removeForwardPort(int local);
 
-	void kill(AndroidApp aut);
+  void clearUserData(AndroidApp app);
 
-	void kill(String appBasePackage);
+  void clearUserData(String appBasePackage);
 
-	String runAdbCommand(String parameter);
+  void kill(AndroidApp aut);
 
-	/**
-	 * @see KeyEvent
-	 * @param value
-	 */
-	void inputKeyevent(int value);
+  void kill(String appBasePackage);
 
-	String getExternalStoragePath();
+  String runAdbCommand(String parameter);
 
-	String getCrashLog();
+  String getExternalStoragePath();
 
-	boolean isWifiOff();
+  String getCrashLog();
 
-	DeviceInfo getDeviceInfo();
+  boolean isWifiOff();
 
-	void restartADB();
+  DeviceInfo getDeviceInfo();
 
-	/**
-	 * 
-	 * @param logCatListener
-	 */
-	void addLogCatListener(LogCatListener logCatListener);
+  void restartADB();
 
-	void removeLogCatListener(LogCatListener logCatListener);
+  /**
+   *
+   * @param logCatListener
+   */
+  void addLogCatListener(LogCatListener logCatListener);
 
-	List<ClientDataInfo> getClientDatasInfo();
+  void removeLogCatListener(LogCatListener logCatListener);
 
-	Client getClientByAppName(String appName);
+  List<ClientDataInfo> getClientDatasInfo();
 
+  /**
+   * return all Dalvik/ART VM processes
+   */
+  Client[] getAllClient();
+
+  /**
+   *
+   * @param appName
+   * @return
+   */
+  Client getClientByAppName(String appName);
 }

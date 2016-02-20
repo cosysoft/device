@@ -1,13 +1,12 @@
 package com.github.cosysoft.device.android.xiaomi;
 
-import java.io.File;
-import java.util.Set;
-
 import com.github.cosysoft.device.android.AndroidApp;
 import com.github.cosysoft.device.android.AndroidDevice;
 import com.github.cosysoft.device.android.impl.AndroidDeviceStore;
 import com.github.cosysoft.device.android.impl.DefaultAndroidApp;
 import com.github.cosysoft.device.exception.DeviceNotFoundException;
+import java.io.File;
+import java.util.Set;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
