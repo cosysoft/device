@@ -41,13 +41,13 @@ Maven
 <dependency>
 		<groupId>com.github.cosysoft</groupId>
 		<artifactId>device-api</artifactId>
-		<version>0.9.1</version>
+		<version>0.9.3</version>
 </dependency>
 ```
 Gradle
 ```groovy
 dependencies {
-		compile 'com.github.cosysoft:device-api:0.9.1'
+		compile 'com.github.cosysoft:device-api:0.9.3'
 }
 ```
 

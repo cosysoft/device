@@ -21,7 +21,7 @@ idea {
 
 
 subprojects {
-  version '0.9.3-SNAPSHOT'
+  version '0.9.4-SNAPSHOT'
   apply plugin: 'java'
   apply plugin: 'idea'
 
