@@ -22,6 +22,10 @@ public class Readme extends AndroidDeviceTest {
   public void takeDevices() {
     TreeSet<AndroidDevice> devices = AndroidDeviceStore.getInstance()
         .getDevices();
+
+    for (AndroidDevice d : devices) {
+      System.out.println(d.getSerialNumber());
+    }
     AndroidDevice device = devices.pollFirst();
     System.out.println(device.getName());
   }

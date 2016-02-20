@@ -57,6 +57,10 @@ dependencies {
 ```java
 TreeSet<AndroidDevice> devices = AndroidDeviceStore.getInstance()
 		.getDevices();
+
+for (AndroidDevice d : devices) {
+  System.out.println(d.getSerialNumber());
+}
 AndroidDevice device = devices.pollFirst();
 System.out.println(device.getName());
 ```
@@ -105,12 +109,33 @@ Ddmlib can monitor one app's cpu/heap/threads and much more,but we need list run
 
 ### List running client for app
 ```java
-List<ClientDataInfo> clientDataInfos = device.getClientDatasInfo();
-for (ClientDataInfo client : clientDataInfos) {
-	System.out.println(client.getName());
-	System.out.println(client.getPid());
+@Test
+public void testListClients() {
+
+  Client[] clients = device.getAllClient();
+  for (Client client : clients) {
+    ClientData clientData = client.getClientData();
+    System.out.println(clientData.getClientDescription() + " " + clientData.getPid());
+  }
+}
+
+```
+### List selected app threads
+```java
+
+@Test
+public void testListTheads() {
+
+  Client runningApp = device.getClientByAppName("com.android.calendar");
+
+  ThreadInfo[] threads = runningApp.getClientData().getThreads();
+
+  for (int i = 0; i < threads.length; i++) {
+    System.out.println(threads[i].getThreadName()
+        + " at "
+        + threads[i].getStatus());
+  }
 }
 ```
-
 ## License
 [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
